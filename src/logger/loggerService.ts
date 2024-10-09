@@ -2,10 +2,11 @@ import { injectable } from 'inversify'
 import { Logger } from 'tslog'
 import { ILogger } from './logger.interface'
 import 'reflect-metadata'
+import { TEMPORARY_ANY } from '../types'
 
 @injectable()
 export class LoggerService implements ILogger {
-  public logger: Logger<any>
+  public logger: Logger<TEMPORARY_ANY>
 
   constructor() {
     this.logger = new Logger({

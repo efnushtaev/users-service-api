@@ -3,6 +3,7 @@ import { Router, Response } from 'express';
 import { injectable } from 'inversify';
 import 'reflect-metadata';
 import { IControllerRoute } from './route.interface';
+import { TEMPORARY_ANY } from '../types';
 
 @injectable()
 export abstract class BaseController {
@@ -16,7 +17,11 @@ export abstract class BaseController {
 		return this._router;
 	}
 
-	private send<T>(res: Response, code: number, message: T): Response<any, Record<string, any>> {
+	private send<T>(
+		res: Response,
+		code: number,
+		message: T,
+	): Response<TEMPORARY_ANY, Record<string, TEMPORARY_ANY>> {
 		res.type('application/json');
 		return res.status(code).json(message);
 	}

@@ -45,10 +45,7 @@ export class UserService implements IUserService {
 
 		const newUser = new User(email, username, brockerToken);
 		await newUser.setPassword(password, this.configService.get('SALT'));
-console.log('--------------------------2')
-console.log('newUser: ', newUser)
-const result = await this.userRepositry.create(newUser);
-console.log('result: ', result)
+		const result = await this.userRepositry.create(newUser);
 
 		return result;
 	}

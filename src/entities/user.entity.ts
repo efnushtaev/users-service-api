@@ -33,13 +33,13 @@ export class User {
 	get getUser(): {
 		email: string;
 		username: string;
-		brockerToken: string;
+		// brockerToken: string;
 		password: string;
 	} {
 		return {
 			email: this._email,
 			username: this._username,
-			brockerToken: this._brockerToken,
+			// brockerToken: this._brockerToken,
 			password: this._password,
 		};
 	}

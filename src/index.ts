@@ -12,14 +12,16 @@ import { IUsersController } from './controllers/user.controller.interface';
 import { IUserRepository } from './services/user.repository.interface';
 import { IUserService } from './services/users.service.interface';
 import { ILogger } from './logger/logger.interface';
+import { IExeptionFilter } from './errors/exeption.filter.interface';
+import { ExeptionFilter } from './errors/exeption.filter';
 
 const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<ILogger>(TYPES.Logger).to(LoggerService).inSingletonScope();
 	bind<IUserService>(TYPES.UserService).to(UserService).inSingletonScope();
 	bind<IUserRepository>(TYPES.UserRepositry).to(UserRepositry).inSingletonScope();
 	bind<IUsersController>(TYPES.UserController).to(UserController).inSingletonScope();
-	// bind<ILogger>(TYPES.ExeptionFilter).to(LoggerService).inSingletonScope();
 	bind<IConfigService>(TYPES.ConfigService).to(ConfigService).inSingletonScope();
+	bind<IExeptionFilter>(TYPES.ExeptionFilter).to(ExeptionFilter).inSingletonScope();
 	bind<MysqlService>(TYPES.MysqlService).to(MysqlService).inSingletonScope();
 	bind<App>(TYPES.Application).to(App);
 });

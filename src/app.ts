@@ -6,10 +6,10 @@ import { ILogger } from './logger/logger.interface';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
 import { IConfigService } from './config/config.service.interface';
-import { routes } from './routes/deals.routes';
 import { AuthMiddleware } from './common/auth.middleware';
 import { UserController } from './controllers/user.controller';
 import { MysqlService } from './common/mysqlConnector';
+import { IExeptionFilter } from './errors/exeption.filter.interface';
 
 @injectable()
 export class App {
@@ -20,7 +20,7 @@ export class App {
 	constructor(
 		@inject(TYPES.Logger) private logger: ILogger,
 		@inject(TYPES.UserController) private userController: UserController,
-		// @inject(TYPES.ExeptionFilter) private exeptionFilter: IExeptionFilter,
+		@inject(TYPES.ExeptionFilter) private exeptionFilter: IExeptionFilter,
 		@inject(TYPES.ConfigService) private configService: IConfigService,
 		@inject(TYPES.MysqlService) private mysqlService: MysqlService,
 	) {
@@ -35,18 +35,17 @@ export class App {
 	}
 
 	private useRoutes(): void {
-		routes(this.app);
 		this.app.use('/users', this.userController.router);
 	}
 
-	// private useExeptionFilters(): void {
-	// 	this.app.use(this.exeptionFilter.catch.bind(this.exeptionFilter));
-	// }
+	private useExeptionFilters(): void {
+		this.app.use(this.exeptionFilter.catch.bind(this.exeptionFilter));
+	}
 
 	public async init(): Promise<void> {
 		this.useMiddleware();
 		this.useRoutes();
-		// this.useExeptionFilters();
+		this.useExeptionFilters();
 		this.server = this.app.listen(this.port);
 		this.mysqlService.connection()
 		this.logger.log(`Сервер запущен на http://localhost:${this.port}`);

@@ -16,19 +16,21 @@ export class UserRepositry implements IUserRepository {
 
 	// async find(user) {}
 
-	async create(user: User) {   
-        const promise = new Promise<UserRegisterDto | null>((resolve, reject) => {
-            this.mysqlService.query('INSERT INTO USERS SET ?', user.getUser, (err: TEMPORARY_ANY, res: TEMPORARY_ANY) => {
-                console.log('user: ', user.getUser)
-                if (err) {
-                    reject(err);
-                }
-    
-                resolve(res);
-            });
+	async create(user: User) {
+		const promise = new Promise<UserRegisterDto | null>((resolve, reject) => {
+			this.mysqlService.query(
+				'INSERT INTO USERS SET ?',
+				user.getUser,
+				(err: TEMPORARY_ANY, res: TEMPORARY_ANY) => {
+					if (err) {
+						reject(err);
+					}
 
-        })  
-        
-        return promise;
+					resolve(res);
+				},
+			);
+		});
+
+		return promise;
 	}
 }

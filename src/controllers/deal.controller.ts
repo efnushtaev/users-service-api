@@ -3,8 +3,6 @@
 // import Deal from './../models/deal.model'
 //Создаем и сохраняем новое дело
 export const create = (req, res) => {
-  console.log('--------- deal create req: ', req)
-  console.log('--------- deal create body: ', req.body)
   //  Валидизируем запрос
   if (!req.body) {
     res.status(400).send({
@@ -36,9 +34,7 @@ export const create = (req, res) => {
 
 // Получение всех пользователей из базы данных
 export const findAll = (req, res) => {
-  console.log('findAll all ----------------')
   Deal.getAll((err, data) => {
-    console.log('get all ----------------')
     if (err)
       res.status(500).send({
         message:
